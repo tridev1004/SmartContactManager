@@ -1,0 +1,85 @@
+body{
+    background: #e2e2e2!important;
+}
+.bg-primary1{
+    background: #009688 !important;
+}
+.banner{
+    width: 100%;
+    height: 93vh;
+    background: linear-gradient(rgba(0,0,0,.8),rgba(0,0,0,.8)),url("../img/gta1.jpg");
+    background-size: cover;
+    color: white;
+
+}
+.my-card{
+    padding: 20px;
+    background: #FFFFFF;
+}
+
+
+
+/*adding irrelevant css*/
+.trevor{
+    width: 100%;
+    height: 93vh;
+    background: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)), url("../img/trevor1.png");
+    background-size: cover;
+    background-position: center center; /* Center the background image */
+    color: white;
+}
+
+
+.transparent-form {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.transparent-form .form-group {
+    background-color: transparent;
+    margin-bottom: 20px;
+}
+
+.transparent-form label {
+    color: white;
+}
+
+.transparent-form .form-control {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: none;
+    color: white;
+}
+
+.transparent-form textarea {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: none;
+    color: white;
+}
+
+
+.form-field {
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid #ccc;
+}
+
+/*login css*/
+
+
+
+
+
+#login .container #login-row #login-column #login-box {
+     margin-top: 120px;
+     max-width: 600px;
+     height: 420px;
+     border: 1px solid #9C9C9C;
+     background-color: white;
+ }
+#login .container #login-row #login-column #login-box #login-form {
+    padding: 20px;
+}
+#login .container #login-row #login-column #login-box #login-form #register-link {
+    margin-top: 5px;
+    text-align: right;
+}
