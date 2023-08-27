@@ -26,7 +26,9 @@ public class MyConfig {
 
                         .anyRequest().authenticated()
                 );
-        http.formLogin(formLogin->formLogin.loginPage("/signin"));
+        http.formLogin(formLogin->formLogin.loginPage("/signin")
+                .loginProcessingUrl("/dologin")
+                .defaultSuccessUrl("/user/index"));
         http.authenticationProvider(authenticationProvider());
         return http.build();
     }
