@@ -11,7 +11,13 @@
         <div id="login-row" class="row justify-content-center align-items-center">
             <div id="login-column" class="col-md-6">
                 <div id="login-box" class="col-md-12">
-                    <form id="login-form" class="form" th:action="@{/dologin}" method="post">
+
+                    <form id="login-form" class="form form-field transparent-form sky" th:action="@{/dologin}" method="post" >
+
+                        <div class="container text-center">
+                            <img  class="" style="width: 80px" src="" th:src="@{/img/icon.png}"/>
+
+                        </div>
                         <h3 class="text-center text-info">Login</h3>
                         <div th:if="${param.error}" class="alert alert-danger">
                             Invalid Username and password

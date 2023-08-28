@@ -11,6 +11,22 @@ public class Contact {
     private String secondName;
     private String work;
     private String email;
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "cId=" + cId +
+                ", name='" + name + '\'' +
+                ", secondName='" + secondName + '\'' +
+                ", work='" + work + '\'' +
+                ", email='" + email + '\'' +
+                ", Phone='" + Phone + '\'' +
+                ", image='" + image + '\'' +
+                ", user=" + user +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
     private String Phone;
     private String image;
     @ManyToOne
