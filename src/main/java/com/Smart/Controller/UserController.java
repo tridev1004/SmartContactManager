@@ -3,6 +3,8 @@ package com.Smart.Controller;
 import com.Smart.dao.UserRepository;
 import com.Smart.entities.Contact;
 import com.Smart.entities.User;
+import com.Smart.helper.Message;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
@@ -57,7 +59,7 @@ public class UserController {
 // processing add contact form
     @PostMapping("/process-contact")
     public String processContact(@ModelAttribute Contact contact, @RequestParam("profileImg") MultipartFile file,
-                                 Principal principal ){
+                                 Principal principal, HttpSession httpSession){
 
       try{
 
@@ -78,15 +80,11 @@ public class UserController {
 
 
           }else{
-
+           /// saving in system
               contact.setImage(file.getOriginalFilename());
                 File savefile= new ClassPathResource("/static/img").getFile();
-
-
-           Path path=   Paths.get(savefile.getAbsolutePath()+File.separator+file.getOriginalFilename());
-
-
-              Files.copy(file.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
+                Path path=   Paths.get(savefile.getAbsolutePath()+File.separator+file.getOriginalFilename());
+           Files.copy(file.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
               System.out.println("file uploaded");
 
           }
@@ -102,20 +100,20 @@ public class UserController {
           this.userRepository.save(user);
 
 
-
-
-
+          System.out.println(contact);
 
           System.out.println("added to database");
 
+       httpSession.setAttribute("message", new Message("Your contact is added Add more!","success"));
 
 
-
-          System.out.println(contact);
       }catch (Exception e){
 
       e.printStackTrace();
           System.out.println("error:"+ e.getMessage());
+          httpSession.setAttribute("message", new Message("Your contact is  Not added Something Went wrong",
+                  "danger"));
+
 
 
 
@@ -129,6 +127,14 @@ public class UserController {
         return "normal/add_contact_form";
 
     }
-
-
+    // removing message of error
+    @GetMapping("/remove-message")
+    public String removeMessage(HttpSession session) {
+        session.removeAttribute("message");
+        return "normal/add_contact_form"; // Redirect back to your original page
+    }
 }
+
+
+
+
