@@ -16,7 +16,7 @@
             <form action="#" th:object="${contact}"
             enctype="multipart/form-data"
                   method="post"
-                  th:action="@{user/process-contact}"
+                  th:action="@{/user/process-contact}"
                   class="mt-2"
             >
 
@@ -84,7 +84,7 @@
 <!--                        contact image-->
 
                 <div class="custom-file" >
-                    <input type="file" name="profileimage"/>
+                    <input type="file" name="profileImg"/>
                 </div>
 
                 <div class="container text-center">
