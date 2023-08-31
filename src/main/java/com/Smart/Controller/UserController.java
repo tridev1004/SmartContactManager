@@ -1,5 +1,6 @@
 package com.Smart.Controller;
 
+import com.Smart.dao.ContactRepository;
 import com.Smart.dao.UserRepository;
 import com.Smart.entities.Contact;
 import com.Smart.entities.User;
@@ -7,6 +8,9 @@ import com.Smart.helper.Message;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +22,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
@@ -25,6 +31,8 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ContactRepository contactRepository;
     @ModelAttribute  // method for adding common data to response
     public void addcommonData(Model model,Principal principal){
         String userName = principal.getName();   // fetching the username in who is logged in
@@ -76,7 +84,8 @@ public class UserController {
 
           if(file.isEmpty())
           {
-              System.out.println("file is emptry");
+              System.out.println("file is empty");
+              contact.setImage("icon.png");
 
 
           }else{
@@ -133,6 +142,44 @@ public class UserController {
         session.removeAttribute("message");
         return "normal/add_contact_form"; // Redirect back to your original page
     }
+    /// showing the contacts
+
+    @GetMapping("/show-contacts/{page}")
+    public  String showContact(@PathVariable("page") Integer page,     Model model,Principal principal){
+        model.addAttribute("title", "show-user Contacts");
+
+        String userName = principal.getName();
+        User user = this.userRepository.getUserByUserName(userName);
+
+        Pageable pageable = PageRequest.of(page, 5);
+        Page<Contact> contacts= this.contactRepository.findContactsByUser(user.getId(),pageable);
+
+         model.addAttribute("contacts",contacts);
+         model.addAttribute("currentPage",page);
+         model.addAttribute("totalPages",contacts.getTotalPages());
+
+
+
+
+
+         return "normal/show_contacts";
+    }
+
+
+//
+//     showing particular contact
+    @RequestMapping("/contact/{cId}")
+    public String showContactDetail(@PathVariable("cId")Integer cId,Model model){
+        System.out.println(cId);
+
+
+        Optional<Contact> contactOptional = this.contactRepository.findById(cId);
+        Contact contact=contactOptional.get();
+        model.addAttribute("contact",contact);
+
+        return "normal/contact_detail";
+    }
+
 }
 
 
