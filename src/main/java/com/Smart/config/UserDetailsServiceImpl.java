@@ -21,11 +21,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         // fetch user form database
         User user = userRepository.getUserByUserName(username);
-    if(user==null){
-        throw new UsernameNotFoundException("could not found user");
+        if (user == null) {
+            throw new UsernameNotFoundException("could not found user");
 
-    }
-    CustomUserDetails customUserDetails=new CustomUserDetails(user);
+        }
+        CustomUserDetails customUserDetails = new CustomUserDetails(user);
 
         return customUserDetails;
     }

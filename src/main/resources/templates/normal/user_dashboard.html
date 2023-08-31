@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" th:replace="normal/base::Layout(~{::section})">
+<html lang="en" th:replace="normal/base::Layout(~{::section})" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body><section>
+<body>
+<section>
 
     <h1>A private dashboard</h1>
     <h1>username <span th:text="${user.name}"></span></h1>

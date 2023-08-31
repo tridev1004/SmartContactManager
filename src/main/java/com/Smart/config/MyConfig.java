@@ -9,8 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 @EnableWebSecurity
 public class MyConfig {
@@ -20,13 +18,13 @@ public class MyConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/admin/**").hasRole("ADMIN")   // ONLY ACCESSIBLE TO ADMIN
-                                .requestMatchers("/user/**").hasRole("USER")  // ONLY ACCESSIBLE TO user
-                                .requestMatchers("/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")   // ONLY ACCESSIBLE TO ADMIN
+                        .requestMatchers("/user/**").hasRole("USER")  // ONLY ACCESSIBLE TO user
+                        .requestMatchers("/**").permitAll()
 
                         .anyRequest().authenticated()
                 );
-        http.formLogin(formLogin->formLogin.loginPage("/signin")
+        http.formLogin(formLogin -> formLogin.loginPage("/signin")
                 .loginProcessingUrl("/dologin")
                 .defaultSuccessUrl("/user/index"));
         http.authenticationProvider(authenticationProvider());
@@ -34,28 +32,26 @@ public class MyConfig {
     }
 
 
+    @Bean
+    public UserDetailsService getUserDetailService() {
+        return new UserDetailsServiceImpl();
+    }
 
     @Bean
-    public UserDetailsService getUserDetailService(){
-        return  new UserDetailsServiceImpl();
-    }
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider daoAuthenticationProvider=new DaoAuthenticationProvider();
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
 
 
         daoAuthenticationProvider.setUserDetailsService(this.getUserDetailService());
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
 
-        return  daoAuthenticationProvider;
+        return daoAuthenticationProvider;
     }
-
-
 
 
 }

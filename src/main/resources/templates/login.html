@@ -1,54 +1,56 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" th:replace="base::Layout(~{::section})">
+<html lang="en" th:replace="base::Layout(~{::section})" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title >About page</title>
+    <title>About page</title>
 </head>
 <body>
 <section>
     <div id="login">
-    <div class="container">
-        <div id="login-row" class="row justify-content-center align-items-center">
-            <div id="login-column" class="col-md-6">
-                <div id="login-box" class="col-md-12">
+        <div class="container">
+            <div class="row justify-content-center align-items-center" id="login-row">
+                <div class="col-md-6" id="login-column">
+                    <div class="col-md-12" id="login-box">
 
-                    <form id="login-form" class="form form-field transparent-form sky" th:action="@{/dologin}" method="post" >
+                        <form class="form form-field transparent-form sky" id="login-form" method="post"
+                              th:action="@{/dologin}">
 
-                        <div class="container text-center">
-                            <img  class="" style="width: 80px" src="" th:src="@{/img/icon.png}"/>
+                            <div class="container text-center">
+                                <img class="" src="" style="width: 80px" th:src="@{/img/icon.png}"/>
 
-                        </div>
-                        <h3 class="text-center text-info">Login</h3>
-                        <div th:if="${param.error}" class="alert alert-danger">
-                            Invalid Username and password
+                            </div>
+                            <h3 class="text-center text-info">Login</h3>
+                            <div class="alert alert-danger" th:if="${param.error}">
+                                Invalid Username and password
 
-                        </div>
-                        <div th:if="${param.logout}" class="alert alert-success">
-                           You have Been logged out
+                            </div>
+                            <div class="alert alert-success" th:if="${param.logout}">
+                                You have Been logged out
 
-                        </div>
-                        <div class="form-group">
-                            <label for="username" class="text-info">Username:</label><br>
-                            <input type="text" name="username" id="username" class="form-control">
-                        </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="text-info" for="username">Username:</label><br>
+                                <input class="form-control" id="username" name="username" type="text">
+                            </div>
 
-                        <div class="form-group">
-                            <label for="password" class="text-info">Password:</label><br>
-                            <input type="password" name="password" id="password" class="form-control">
-                        </div>
-                        <div class="form-group mt-4">
-                            <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
-                            <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
-                        </div>
-                        <div id="register-link" class="text-right mt-2">
-                            <a href="/signup" class="text-info">Register here</a>
-                        </div>
-                    </form>
+                            <div class="form-group">
+                                <label class="text-info" for="password">Password:</label><br>
+                                <input class="form-control" id="password" name="password" type="password">
+                            </div>
+                            <div class="form-group mt-4">
+                                <label class="text-info" for="remember-me"><span>Remember me</span> <span><input
+                                        id="remember-me" name="remember-me" type="checkbox"></span></label><br>
+                                <input class="btn btn-info btn-md" name="submit" type="submit" value="submit">
+                            </div>
+                            <div class="text-right mt-2" id="register-link">
+                                <a class="text-info" href="/signup">Register here</a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </section>
 
 </body>

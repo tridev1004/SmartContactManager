@@ -13,7 +13,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @NotBlank(message = "Name field is required")
-    @Size(min = 2,max = 20,message ="type b/w the range of 2-20!!")
+    @Size(min = 2, max = 20, message = "type b/w the range of 2-20!!")
     private String name;
     @Column(unique = true)
     private String email;
@@ -24,7 +24,7 @@ public class User {
     @Column(length = 500)
     private String about;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private List<Contact> contacts = new ArrayList<>();
 
     public User(int id, String name, String email, String password, String role, boolean enabled, String imageUrl, String about) {

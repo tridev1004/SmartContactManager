@@ -2,23 +2,22 @@
 <html lang="en" th:replace="normal/base::Layout(~{::section})" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title> Contact</title>
+    <title>Title</title>
 </head>
 <body>
 <section>
 
     <div class="card mr-3 ml-3">
         <div class="card-body">
-            <h1 class="text-center">Add Contact</h1>
+            <h1 class="text-center">Update Your Contact</h1>
             <div class="container-fluid mt-1">
                 <div class="row">
                     <div class="col-md-8 offset-md-2">
                         <form action="#" class="mt-2"
                               enctype="multipart/form-data"
                               method="post"
-                              th:action="@{/user/process-contact}"
-                              th:object="${contact}"
-                        >
+                              th:action="@{/user/process-update}"
+                              th:object="${contact}">
 
                             <!--              first name field-->
 
@@ -28,7 +27,8 @@
                                         <i class="fa fa-plus"></i>
                                     </div>
                                 </div>
-                                <input class="form-control" id="firstName" name="name" placeholder="Enter your name" required
+                                <input class="form-control" id="firstName" name="name" placeholder="Enter your name"
+                                       required th:value="${contact.name}"
                                        type="text"/>
                             </div>
 
@@ -40,8 +40,9 @@
                                         <i class="fa-solid fa-user"></i>
                                     </div>
                                 </div>
-                                <input class="form-control" id="secondName" name="secondName" placeholder="Enter your second name"
-                                       required type="text"/>
+                                <input class="form-control" id="secondName" name="secondName"
+                                       placeholder="Enter your second name" required
+                                       th:value="${contact.secondName}" type="text"/>
                             </div>
 
                             <!--                  phone field-->
@@ -53,8 +54,10 @@
                                         <i class="fa-solid fa-phone"></i>
                                     </div>
                                 </div>
-                                <input class="form-control" id="phone" name="Phone" placeholder="Enter your phone number here"
-                                       required type="tel"/>
+                                <input class="form-control" id="phone" name="Phone"
+                                       placeholder="Enter your phone number here"
+                                       required
+                                       th:value="${contact.phone}" type="tel"/>
                             </div>
 
                             <!--                email field-->
@@ -64,7 +67,8 @@
                                         @
                                     </div>
                                 </div>
-                                <input class="form-control" id="email" name="email" placeholder="Enter your Email!" required
+                                <input class="form-control" id="email" name="email" placeholder="Enter your Email!"
+                                       required th:value="${contact.email}"
                                        type="email"/>
                             </div>
 
@@ -77,16 +81,20 @@
                                         <i class="fa-solid fa-briefcase"></i>
                                     </div>
                                 </div>
-                                <input class="form-control" id="work" name="work" placeholder="Enter your work here" required
+                                <input class="form-control" id="work" name="work" placeholder="Enter your work here"
+                                       required th:value="${contact.work}"
                                        type="text"/>
                             </div>
 
                             <!--                Contact description-->
-                            <div class="form-group mt-3">
+                            <div class="form-group mt-3" th:text="${contact.description}">
                                 <textarea class="form-control" id="description" name="description"
                                           placeholder="Enter Contact Description" rows="10"></textarea>
                             </div>
                             <!--                        contact image-->
+                              <div class="container text-center">
+                                <img style="width: 250px;height: 250px;" class="img-fluid my_profile_picture" src="" th:src="@{'/img'+${contact.image}}" alt=""/>
+                              </div>
 
                             <div class="custom-file">
                                 <input name="profileImg" type="file"/>
@@ -110,4 +118,5 @@
 </section>
 
 </body>
+</html>
 </html>

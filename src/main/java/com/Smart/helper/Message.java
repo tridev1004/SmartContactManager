@@ -4,6 +4,11 @@ public class Message {
     private String content;
     private String type;
 
+    public Message(String content, String type) {
+        this.content = content;
+        this.type = type;
+    }
+
     public String getContent() {
         return content;
     }
@@ -17,11 +22,6 @@ public class Message {
     }
 
     public void setType(String type) {
-        this.type = type;
-    }
-
-    public Message(String content, String type) {
-        this.content = content;
         this.type = type;
     }
 }

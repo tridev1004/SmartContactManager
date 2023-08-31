@@ -1,61 +1,63 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" th:replace="normal/base::Layout(~{::section})">
+<html lang="en" th:replace="normal/base::Layout(~{::section})" xmlns:th="https://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
-<body><section>
+<body>
+<section>
 
-  <h1>Showing Contact details </h1>
-  <div class="card mr-3 ml-3" >
-    <div class="card-body">
+    <h1>Showing Contact details </h1>
+    <div class="card mr-3 ml-3">
+        <div class="card-body">
 
-      <div class="container text-center">
-        <img style="width: 200px; height: 200px" class="my_profile_picture" src="" th:src="@{'/img/'+${contact.image}}" alt="profile-photo"/>
-        <h3 class="mt-3" >
-          <span th:text="${contact.name}"></span>
-        </h3>
-        <table class="table">
-          <thead>
-          <tr>
-            <th  scope="col">#Id</th>
-            <th scope="col">SCMUSER<span th:text="${contact.cId}"> </span></th>
+            <div class="container text-center">
+                <img alt="profile-photo" class="my_profile_picture" src=""
+                     style="width: 200px; height: 200px" th:src="@{'/img/'+${contact.image}}"/>
+                <h3 class="mt-3">
+                    <span th:text="${contact.name}"></span>
+                </h3>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#Id</th>
+                        <th scope="col">SCMUSER<span th:text="${contact.cId}"> </span></th>
 
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <th scope="row">Email</th>
-            <td><span th:text="${contact.email}"></span></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">Email</th>
+                        <td><span th:text="${contact.email}"></span></td>
 
-          </tr>
-          <tr>
-            <th scope="row">phone</th>
-            <td><span th:text="${contact.phone}"></span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">phone</th>
+                        <td><span th:text="${contact.phone}"></span></td>
 
-          </tr>
-          <tr>
-            <th scope="row">Work</th>
-            <td><span th:text="${contact.work}"></span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Work</th>
+                        <td><span th:text="${contact.work}"></span></td>
 
-          </tr>
+                    </tr>
 
 
-          </tbody>
+                    </tbody>
 
-        </table>
+                </table>
 
-        <div th:if="${contact}" class="description">
-          <th:block th:utext="${contact.description}"></th:block>
+                <div class="description" th:if="${contact}">
+                    <th:block th:utext="${contact.description}"></th:block>
+                </div>
+                <div class="container mt-3">
+                    <a class="btn btn-danger btn-sm" th:href="@{'/user/delete/'+${contact.cId}}">Delete</a>
+                    <button class="btn btn-success btn-sm btn-block">Update</button>
+                </div>
+            </div>
+
         </div>
-     <div class="container mt-3">
-       <a th:href="@{'/user/delete/'+${contact.cId}}" class="btn btn-danger btn-sm">Delete</a>
-       <button class="btn btn-success btn-sm btn-block">Update</button>
-     </div>
-      </div>
-
     </div>
-  </div>
 
 </section>
 

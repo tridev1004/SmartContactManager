@@ -48,17 +48,17 @@ public class HomeController {
     @RequestMapping(value = "/do_register", method = RequestMethod.POST)
     public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult result1,
                                @RequestParam(value = "agreement", defaultValue = "false") boolean agreement,
-                               Model model  , HttpSession session) {
-        try{
+                               Model model, HttpSession session) {
+        try {
 
             if (!agreement) {
                 System.out.println("You have not agreed to terms and condition");
                 throw new Exception();  // if agreement not clicked then throwing exception to catch block
 
             }
-            if(result1.hasErrors()){
-                System.out.println("error: "+ result1.toString());
-                model.addAttribute("user",user);
+            if (result1.hasErrors()) {
+                System.out.println("error: " + result1);
+                model.addAttribute("user", user);
                 return "signup";
             }
             // if no exception then pursuing further
@@ -71,32 +71,26 @@ public class HomeController {
             System.out.println(user);
 
 
-
-
             User result = this.userRepository.save(user);
 
 
-
-
-
             model.addAttribute("user", new User());// sending blank new user
-            session.setAttribute("message",new Message("Successfully registered!!","alert-success"));
+            session.setAttribute("message", new Message("Successfully registered!!", "alert-success"));
             return "signup";
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            model.addAttribute("user",user);  // incase of error ending half filled user form
-            session.setAttribute("message",new Message("Something went wrong","alert-danger"));
+            model.addAttribute("user", user);  // incase of error ending half filled user form
+            session.setAttribute("message", new Message("Something went wrong", "alert-danger"));
             return "signup";
 
         }
     }
 
 
-
     /// custom login
     @GetMapping("/signin")
-    public  String CustomLogin(Model model){
+    public String CustomLogin(Model model) {
         model.addAttribute("title", "Login-Smart contact manager");
 
         return "login";

@@ -22,7 +22,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -33,8 +32,9 @@ public class UserController {
     private UserRepository userRepository;
     @Autowired
     private ContactRepository contactRepository;
+
     @ModelAttribute  // method for adding common data to response
-    public void addcommonData(Model model,Principal principal){
+    public void addcommonData(Model model, Principal principal) {
         String userName = principal.getName();   // fetching the username in who is logged in
         System.out.println(userName);
 
@@ -42,100 +42,86 @@ public class UserController {
 
         User user = userRepository.getUserByUserName(userName);
         System.out.println(user);
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
     }
 
 
     // dashboard_home
     @RequestMapping("/index")
-    public String dashboard(Model model, Principal principal){  // using model to send the data to normal/user_dashboard
-        model.addAttribute("title","User Dashboard -Smart contact manager");
+    public String dashboard(Model model, Principal principal) {  // using model to send the data to normal/user_dashboard
+        model.addAttribute("title", "User Dashboard -Smart contact manager");
 
 
-        return  "normal/user_dashboard";
+        return "normal/user_dashboard";
     }
 
 
     // adding form for contacts
     @GetMapping("/add-contact")
-    public String OpenAddContactForm(Model model){
-        model.addAttribute("title","Add Contact-Smart contact manager");
-        model.addAttribute("contact",new Contact());
+    public String OpenAddContactForm(Model model) {
+        model.addAttribute("title", "Add Contact-Smart contact manager");
+        model.addAttribute("contact", new Contact());
         return "normal/add_contact_form";
     }
 
-// processing add contact form
+    // processing add contact form
     @PostMapping("/process-contact")
     public String processContact(@ModelAttribute Contact contact, @RequestParam("profileImg") MultipartFile file,
-                                 Principal principal, HttpSession httpSession){
+                                 Principal principal, HttpSession httpSession) {
 
-      try{
-
-
+        try {
 
 
+            String name = principal.getName();
+            User user = this.userRepository.getUserByUserName(name);
 
 
-          String name =principal.getName();
-          User user=this.userRepository.getUserByUserName(name);
+            // processing thew file
+
+            if (file.isEmpty()) {
+                System.out.println("file is empty");
+                contact.setImage("icon.png");
 
 
-          // processing thew file
+            } else {
+                /// saving in system
+                contact.setImage(file.getOriginalFilename());
+                File savefile = new ClassPathResource("/static/img").getFile();
+                Path path = Paths.get(savefile.getAbsolutePath() + File.separator + file.getOriginalFilename());
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("file uploaded");
 
-          if(file.isEmpty())
-          {
-              System.out.println("file is empty");
-              contact.setImage("icon.png");
-
-
-          }else{
-           /// saving in system
-              contact.setImage(file.getOriginalFilename());
-                File savefile= new ClassPathResource("/static/img").getFile();
-                Path path=   Paths.get(savefile.getAbsolutePath()+File.separator+file.getOriginalFilename());
-           Files.copy(file.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
-              System.out.println("file uploaded");
-
-          }
+            }
 
 
+            user.getContacts().add(contact);   //////a
+            contact.setUser(user);          // bidirectional mapping here
+
+            this.userRepository.save(user);
 
 
+            System.out.println(contact);
+
+            System.out.println("added to database");
+
+            httpSession.setAttribute("message", new Message("Your contact is added Add more!", "success"));
 
 
-          user.getContacts().add(contact);   //////a
-          contact.setUser(user);          // bidirectional mapping here
+        } catch (Exception e) {
 
-          this.userRepository.save(user);
-
-
-          System.out.println(contact);
-
-          System.out.println("added to database");
-
-       httpSession.setAttribute("message", new Message("Your contact is added Add more!","success"));
+            e.printStackTrace();
+            System.out.println("error:" + e.getMessage());
+            httpSession.setAttribute("message", new Message("Your contact is  Not added Something Went wrong",
+                    "danger"));
 
 
-      }catch (Exception e){
-
-      e.printStackTrace();
-          System.out.println("error:"+ e.getMessage());
-          httpSession.setAttribute("message", new Message("Your contact is  Not added Something Went wrong",
-                  "danger"));
-
-
-
-
-
-
-
-      }
-
+        }
 
 
         return "normal/add_contact_form";
 
     }
+
     // removing message of error
     @GetMapping("/remove-message")
     public String removeMessage(HttpSession session) {
@@ -145,44 +131,40 @@ public class UserController {
     /// showing the contacts
 
     @GetMapping("/show-contacts/{page}")
-    public  String showContact(@PathVariable("page") Integer page,     Model model,Principal principal){
+    public String showContact(@PathVariable("page") Integer page, Model model, Principal principal) {
         model.addAttribute("title", "show-user Contacts");
 
         String userName = principal.getName();
         User user = this.userRepository.getUserByUserName(userName);
 
         Pageable pageable = PageRequest.of(page, 5);
-        Page<Contact> contacts= this.contactRepository.findContactsByUser(user.getId(),pageable);
+        Page<Contact> contacts = this.contactRepository.findContactsByUser(user.getId(), pageable);
 
-         model.addAttribute("contacts",contacts);
-         model.addAttribute("currentPage",page);
-         model.addAttribute("totalPages",contacts.getTotalPages());
-
-
+        model.addAttribute("contacts", contacts);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", contacts.getTotalPages());
 
 
-
-         return "normal/show_contacts";
+        return "normal/show_contacts";
     }
 
 
-//
+    //
 //     showing particular contact
     @RequestMapping("/contact/{cId}")
-    public String showContactDetail(@PathVariable("cId")Integer cId,Model model,Principal principal){
+    public String showContactDetail(@PathVariable("cId") Integer cId, Model model, Principal principal) {
         String userName = principal.getName();
-        User user=this.userRepository.getUserByUserName(userName);
+        User user = this.userRepository.getUserByUserName(userName);
         System.out.println(cId);
 
         Optional<Contact> contactOptional = this.contactRepository.findById(cId);
 
-        Contact contact=contactOptional.get();
+        Contact contact = contactOptional.get();
 
-        if(user.getId()==contact.getUser().getId()){
-            model.addAttribute("contact",contact);   // just a security check to take measure if
+        if (user.getId() == contact.getUser().getId()) {
+            model.addAttribute("contact", contact);   // just a security check to take measure if
             // different user try to hit and fetch the contact of different user
         }
-
 
 
         return "normal/contact_detail";
@@ -190,15 +172,36 @@ public class UserController {
 
     // deleting the user now
     @GetMapping("delete/{cId}")
-    public  String deleteContact(@PathVariable("cId") Integer cId,Model model,HttpSession httpSession){
+    public String deleteContact(@PathVariable("cId") Integer cId, Model model, HttpSession httpSession) {
         Optional<Contact> contactOp = this.contactRepository.findById(cId);
-        Contact contact=contactOp.get();
-   contact.setUser(null);
+        Contact contact = contactOp.get();
+        contact.setUser(null);
 
         this.contactRepository.delete(contact);
 
-        httpSession.setAttribute("message",new Message("Contact Deleted Successfully..","success"));
-return"redirect:/user/show-contacts/0";
+        httpSession.setAttribute("message", new Message("Contact Deleted Successfully..", "success"));
+        return "redirect:/user/show-contacts/0";
+    }
+
+
+
+
+    // updating the Contact
+
+    @PostMapping("/update-contact/{cId}")
+    public String updateForm(@PathVariable("cId") Integer cId, Model m){
+
+        Contact contact=this.contactRepository.findById(cId).get();
+        m.addAttribute("contact", contact);
+
+
+
+
+
+
+
+        m.addAttribute("title","Update Contact");
+        return "normal/update_form";
     }
 
 
