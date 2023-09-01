@@ -2,6 +2,9 @@ package com.Smart.entities;
 
 import jakarta.persistence.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 @Entity
 public class Contact {
     @Id
@@ -26,7 +29,9 @@ public class Contact {
 //                ", description='" + description + '\'' +
 //                '}';
 //    }
-
+@Column(unique = true)
+@NotBlank(message = "enter a valid number")
+@Size(min = 2, max = 20, message = "type b/w the range of 2-20!!")
     private String Phone;
 
     @Override
