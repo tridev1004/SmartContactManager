@@ -7,8 +7,24 @@
 <body>
 <section>
 
-    <h1>A private dashboard</h1>
-    <h1>username <span th:text="${user.name}"></span></h1>
+  <div class="container">
+      <div class="card">
+          <div class="card-body">
+              <div class="container text-center">
+                  <img alt="profile-photo" class="my_profile_picture" src=""
+                       style="width: 200px; height: 200px" th:src="@{'/img/agent.png'}" />
+              </div>
+              <h1 class="text-center mt-3 text-secondary font-ita
+              lic font-weight-light">
+                  Start Adding your Contact On Cloud....
+              </h1>
+              <div class="d-grid gap-2">
+                  <a th:href="@{/user/add-contact}" class="btn btn-outline-secondary mt-4 btn-block text-uppercase">Add Your Contact</a>
+
+              </div>
+          </div>
+      </div>
+  </div>
 
 </section>
 

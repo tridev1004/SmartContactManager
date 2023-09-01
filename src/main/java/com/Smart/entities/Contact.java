@@ -28,6 +28,12 @@ public class Contact {
 //    }
 
     private String Phone;
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.cId==((Contact)obj).getcId();
+    }
+
     private String image;
     @ManyToOne
     private User user;
