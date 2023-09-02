@@ -1,5 +1,6 @@
 package com.Smart.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import javax.validation.constraints.NotBlank;
@@ -41,6 +42,7 @@ public class Contact {
 
     private String image;
     @ManyToOne
+    @JsonIgnore
     private User user;
     @Column(length = 1000)
     private String description;

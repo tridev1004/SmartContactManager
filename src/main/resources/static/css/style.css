@@ -172,3 +172,20 @@ body{
     background-position: center center; /* Center the background image */
     color: white;
 }
+
+
+/* search bar css*/
+
+.search-container{
+    position: relative;
+
+}
+
+.search-result{
+    position: absolute;
+    background: white;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid gray;
+    display: none;
+}

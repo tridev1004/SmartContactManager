@@ -14,6 +14,20 @@
         <div class="card-body">
             <h1 class="text-center">Your contacts</h1>
 
+            <div class="search-container my-3">
+                <input onkeyup="Search()"  id="search-input" type="text" class="form-control" placeholder="Search Your Contacts"/>
+
+                <div class="search-result">
+<!--                    waiting for result to reach here-->
+
+                </div>
+
+            </div>
+
+
+
+
+
             <table class="table">
                 <thead>
                 <tr>
@@ -86,6 +100,7 @@
 
 
 </section>
+<script th:src="@{/js/script.js}"></script>
 
 </body>
 </html>
