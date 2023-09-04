@@ -27,9 +27,9 @@
 
 
 
-
-            <table class="table">
-                <thead>
+<div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="thead-light ">
                 <tr>
                     <th scope="col">#ID</th>
                     <th scope="col">Name</th>
@@ -68,6 +68,7 @@
 
                 </tbody>
             </table>
+</div>
             <!--   Pagination-->
 
             <nav aria-label="Page navigation example">
@@ -81,10 +82,12 @@
                     <li class="page-item"
                         th:classappend="${currentPage==i-1? 'active' : ''}"
                         th:each="i :${#numbers.sequence(1,totalPages)}"><a
-                            class="page-link" href="#" th:href="@{'/user/show-contacts/'+${i-1}}"><span
+                            class="page-link" href="#" th:href="@{'/user/show-contacts/'+${i-1}}">
+                        <span
                             th:text="${i}">
-
-          </span></a></li>
+                        </span>
+                    </a>
+                    </li>
 
 
                     <li class="page-item" th:if="${currentPage+1 !=totalPages} "><a
@@ -98,7 +101,13 @@
 
     </div>
 
+    <script>
+        $('.item').removeClass('active')
+        $('#contact-link').addClass('active')
 
+
+
+    </script>
 </section>
 <script th:src="@{/js/script.js}"></script>
 

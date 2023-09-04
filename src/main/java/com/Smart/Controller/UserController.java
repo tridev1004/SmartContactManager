@@ -11,6 +11,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,8 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -34,7 +37,7 @@ public class UserController {
     private ContactRepository contactRepository;
 
     @ModelAttribute  // method for adding common data to response
-    public void addcommonData(Model model, Principal principal) {
+    public void addCommonData(Model model, Principal principal) {
         String userName = principal.getName();   // fetching the username in who is logged in
         System.out.println(userName);
 
@@ -252,6 +255,49 @@ public class UserController {
         model.addAttribute("title", " User profile page");
         return "normal/profile";
     }
+
+
+    // settings page handler
+   @GetMapping("/settings")
+    public String openSettings(){
+        return "normal/settings";
+
+    }
+
+
+    // change password handler
+
+    // all are returning a view
+@PostMapping("/change-password")
+    public String changePassword(@RequestParam("oldPassword")String oldPassword,
+                                 @RequestParam("newPassword")String newPassword,
+                                 Principal principal,HttpSession session){
+    String userName = principal.getName();// fetching the current logged in user information
+
+    User currentUser = this.userRepository.getUserByUserName(userName);
+    System.out.println(currentUser.getPassword());
+
+
+    System.out.println(oldPassword);
+    System.out.println(newPassword);
+if(this.bCryptPasswordEncoder.matches(oldPassword,currentUser.getPassword())){
+    // change the password
+    currentUser.setPassword(this.bCryptPasswordEncoder.encode(newPassword));
+    this.userRepository.save(currentUser);
+    session.setAttribute("message",new Message("Your password is Successfully changed!!!","success"));
+
+
+
+}else {
+    session.setAttribute("message",new Message("Your Old Password is wrong!","danger"));
+    return "redirect:/user/settings";
+
+}
+
+        return "redirect:/user/index";
+
+}
+
 
 
 
