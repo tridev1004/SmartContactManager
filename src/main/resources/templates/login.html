@@ -28,6 +28,10 @@
                                 You have Been logged out
 
                             </div>
+                            <div class="alert alert-success" th:if="${param.change}">
+                                <p th:text="${param.change}"></p>
+
+                            </div>
                             <div class="form-group">
                                 <label class="text-info" for="username">Username:</label><br>
                                 <input class="form-control" id="username" name="username" type="text">
@@ -44,6 +48,9 @@
                             </div>
                             <div class="text-right mt-2" id="register-link">
                                 <a class="text-info" href="/signup">Register here</a>
+                            </div>
+                            <div class="container text-center">
+                                <a th:href="@{/forget}">Forgot Password ?</a>
                             </div>
                         </form>
                     </div>

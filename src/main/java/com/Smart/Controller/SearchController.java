@@ -6,7 +6,6 @@ import com.Smart.entities.Contact;
 import com.Smart.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +27,6 @@ private ContactRepository contactRepository;
         System.out.println(query);
         User user = this.userRepository.getUserByUserName(principal.getName());
         List<Contact> contacts=this.contactRepository.findByNameContainingAndUser(query,user);
-return ResponseEntity.ok(contacts);
+        return ResponseEntity.ok(contacts);
     }
 }

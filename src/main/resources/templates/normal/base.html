@@ -66,10 +66,13 @@
 
 
     <a id="home-link" href="#" th:href="@{/user/index}" class="item"><i class="fa-solid fa-home"></i>Home</a>
-    <a id="contact-link" href="#" class="item" th:href="@{/user/show-contacts/0}"><i class="fa-solid fa-id-card-alt"></i>View Contacts</a>
-    <a  id="add-link" href="#" class="item" th:href="@{/user/add-contact}"><i class="fa-solid fa-pencil-alt"></i>Add Contact</a>
-    <a id="profile-link" href="#"  class="item" th:href="@{/user/profile}"><i class="fa-solid fa-user-circle"></i>Your Profile</a>
-    <a id="settings-link" href="#" class="item" th:href="@{/user/settings}" ><i class="fa-solid fas fa-cogs"></i>Settings</a>
+    <a id="contact-link" href="#" class="item" th:href="@{/user/show-contacts/0}"><i
+            class="fa-solid fa-id-card-alt"></i>View Contacts</a>
+    <a id="add-link" href="#" class="item" th:href="@{/user/add-contact}"><i class="fa-solid fa-pencil-alt"></i>Add
+        Contact</a>
+    <a id="profile-link" href="#" class="item" th:href="@{/user/profile}"><i class="fa-solid fa-user-circle"></i>Your
+        Profile</a>
+    <a id="settings-link" href="#" class="item" th:href="@{/user/settings}"><i class="fa-solid fas fa-cogs"></i>Settings</a>
     <a href="#" class="item" th:href="@{/logout}"><i class="fa-solid fas fa-sign-out-alt"></i>Logout</a>
     <div class="divider"></div>
 
@@ -98,7 +101,6 @@
 
     <div th:replace="${content}"></div>
 </div>
-
 
 
 <script th:src="@{/js/script.js}"></script>
