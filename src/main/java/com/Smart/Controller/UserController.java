@@ -2,15 +2,22 @@ package com.Smart.Controller;
 
 import com.Smart.dao.ContactRepository;
 import com.Smart.dao.UserRepository;
+import com.Smart.dao.myOrderRepository;
 import com.Smart.entities.Contact;
+import com.Smart.entities.MyOrder;
 import com.Smart.entities.User;
 import com.Smart.helper.Message;
+import com.razorpay.Order;
+import com.razorpay.RazorpayClient;
+import com.razorpay.RazorpayException;
 import jakarta.servlet.http.HttpSession;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +30,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -35,6 +44,8 @@ public class UserController {
     private UserRepository userRepository;
     @Autowired
     private ContactRepository contactRepository;
+    @Autowired
+    private myOrderRepository myOrderRepository;
 
     @ModelAttribute  // method for adding common data to response
     public void addCommonData(Model model, Principal principal) {
@@ -297,8 +308,52 @@ if(this.bCryptPasswordEncoder.matches(oldPassword,currentUser.getPassword())){
         return "redirect:/user/index";
 
 }
+/// handling order
+@PostMapping("/create_order")
+@ResponseBody
+public String CreateOrder(@RequestBody Map<String, Object> data,Principal principal) throws Exception {
+
+    System.out.println(data);
+
+    int amt = Integer.parseInt(data.get("amount").toString());
+    RazorpayClient client = new RazorpayClient("rzp_test_YZDWmInzn4UUCx", "JGYufP7IyKNJbroUlDxrlmtX");
+
+    JSONObject ob=new JSONObject();
+    ob.put("amount",amt*100);
+    ob.put("currency","INR");
+    ob.put("receipt","Txn_23432");
+
+    Order order = client.orders.create(ob);
+    System.out.println(order);
+
+    MyOrder myOrder=new MyOrder();
+    myOrder.setAmount(order.get("amount")+"");
+    myOrder.setOrderId(order.get("id"));
+    myOrder.setPaymentId(null);
+    myOrder.setStatus("created");
+    myOrder.setUser(this.userRepository.getUserByUserName(principal.getName()));
+    myOrder.setReceipt(order.get("receipt"));
+
+     this.myOrderRepository.save(myOrder);
 
 
+
+    return order.toString();
+
+
+}
+@PostMapping("/update_order")
+public ResponseEntity<?> updateOrder(@RequestBody Map<String,Object> data){
+
+    MyOrder myorder = this.myOrderRepository.findByOrderId(data.get("order_id").toString());
+    myorder.setPaymentId(data.get("payment_id").toString());
+    myorder.setStatus(data.get("status").toString());
+    this.myOrderRepository.save(myorder);
+
+
+    System.out.println(data);
+        return ResponseEntity.ok("");
+}
 
 
 }

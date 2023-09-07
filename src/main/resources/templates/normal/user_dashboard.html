@@ -20,11 +20,19 @@
               </h1>
               <div class="d-grid gap-2">
                   <a th:href="@{/user/add-contact}" class="btn btn-outline-secondary mt-4 btn-block text-uppercase">Add Your Contact</a>
+                    <hr/>
+                  <h3 class="my-3">Donate Us </h3>
+                  <input id="payment_field" type="text" class="form-control my-2" placeholder="Enter amount here!!">
+                  <div class="container text-center mt-3">
+                      <button onclick="paymentStart()" class="btn  btn-success" >Pay</button>
+                  </div>
 
               </div>
           </div>
       </div>
   </div>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
     <script>
         $('.item').removeClass('active')
         $('#home-link').addClass('active')
