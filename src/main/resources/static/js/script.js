@@ -84,7 +84,7 @@ $.ajax({
                    name:'Smart contact Manager',
                    description:'donation',
                    order_id:response.id,
-                   handler:function (response){
+                   success:function (response){
                        console.log(response.razorpay_payment_id);
                        console.log(response.razorpay_order_id);
                        console.log(response.razorpay_signature);
@@ -151,9 +151,9 @@ function updatePaymentOnServer (payment_id, order_id, status)  {
                 swal("Good job!", "Congrats !! Payment successful !!", "success");
 
         },
-        // error: function (error) {
-        //     swal("Failed !!", "Your payment is Successful, but we did not get it on server. We will get back to you soon!", "error");
-        // },
+        error: function (error) {
+            swal("Failed !!", "Your payment is Successful, but we did not get it on server. We will get back to you soon!", "error");
+        },
     });
 }
 
