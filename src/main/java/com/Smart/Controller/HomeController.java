@@ -95,5 +95,9 @@ public class HomeController {
 
         return "login";
     }
+    @GetMapping("/about1")
+    public String justabout(){
+        return "normal/about1";
+    }
 
 }

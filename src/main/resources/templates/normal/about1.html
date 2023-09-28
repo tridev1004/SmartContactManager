@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="base::Layout(~{::section})" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>About page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom CSS for Funky Cool -->
+  <link href="/static/css/funky-cool.css" rel="stylesheet">
+</head>
+<body>
+<section>
+
+
+  <header class="funky-header">
+    <div class="container text-center">
+      <img src="/img/logon.jpg" style="height: 100vh;" alt="Disco Ball">
+      <h1 class="display-4">Get to Know Us</h1>
+      <p class="lead">We're the Funky Cool Crew!</p>
+    </div>
+  </header>
+
+  <!-- Funky content section -->
+  <section class="funky-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h2>Our Story</h2>
+          <p>We're on a mission to keep the funk alive and groovin' through the ages. Our journey began in the '70s, and we've been spreading the funk ever since.</p>
+        </div>
+        <div class="col-md-6">
+          <h2>Our Team</h2>
+          <ul>
+            <li>Captain Groove - Funk Visionary</li>
+            <li>Disco Diva - Dance Floor Sensation</li>
+            <li>Techno Wizard - Electronic Maestro</li>
+            <li>Jazzcat - Saxophone Virtuoso</li>
+            <li>Rhythm Rocket - Drumming Dynamo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Funky footer -->
+  <footer class="funky-footer">
+    <div class="container text-center">
+      <p>&copy; 2023 Funky Cool. All rights reserved.</p>
+    </div>
+  </footer>
+</section>
+
+</body>
+</html>

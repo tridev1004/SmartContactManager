@@ -3,9 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <title>About page</title>
+
 </head>
 <body>
-<section><h1>This is aboutpage</h1>
+<section>
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            background-color: #f8f9fa;
+        }
+        .about-header {
+            background: linear-gradient(rgba(0,0,0,.8),rgba(0,0,0,.8)),url("/img/anim.jpg")  ;
+            background-size: cover;
+            color: #fff;
+            padding: 100px 0;
+            text-align: center;
+        }
+        .about-header h1 {
+            font-size: 3rem;
+        }
+        .about-content {
+            padding: 50px 0;
+        }
+        .about-content p {
+            font-size: 1.2rem;
+        }
+        .team-member {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .team-member img {
+            max-width: 100%;
+            border-radius: 50%;
+        }
+        .team-member h3 {
+            margin-top: 10px;
+        }
+    </style>
+    <header class="about-header">
+    <div class="container">
+        <h1>Welcome to Our Home</h1>
+        <p>I am a passionate person with a vision to change everything</p>
+    </div>
+</header>
+
+    <section class="about-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Our Mission</h2>
+                    <p>To get A job for now And start my career .</p>
+                </div>
+                <div class="col-md-6">
+                    <h2>Our Values</h2>
+                    <p>Whatever you do,Do it with your 100%..</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team">
+        <div class="container">
+            <h2>Meet Our Team</h2>
+            <div class="row">
+                <div class="col-md-4 team-member">
+                    <img src="/img/team-member1.jpg" alt="Team Member 1">
+                    <h3>Michael D Santa</h3>
+                    <p>CEO</p>
+                </div>
+                <div class="col-md-4 team-member">
+                    <img src="/img/team-member2.jpg" alt="Team Member 2">
+                    <h3>Trevor Phillips</h3>
+                    <p>COO</p>
+                </div>
+                <div class="col-md-4 team-member">
+                    <img src="/img/team-member3.jpg" alt="Team Member 3">
+                    <h3>Franklin Clinton</h3>
+                    <p>CFO</p>
+                </div>
+            </div>
+        </div>
+    </section>
 </section>
 
 </body>
